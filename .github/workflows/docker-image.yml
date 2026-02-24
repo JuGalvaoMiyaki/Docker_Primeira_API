@@ -22,7 +22,7 @@ jobs:
   docker-publish:
     runs-on: ubuntu-latest
     needs: build-pipeline-api
-    if: ${{ secrets.DOCKER_USERNAME && secrets.DOCKER_PASSWORD }}
+    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
