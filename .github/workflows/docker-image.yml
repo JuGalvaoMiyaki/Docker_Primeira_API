@@ -38,4 +38,4 @@ jobs:
         with:
           context: .
           push: true
-          tags: juliana123/flask-api:latest
+          tags: app/flask-api:latest
