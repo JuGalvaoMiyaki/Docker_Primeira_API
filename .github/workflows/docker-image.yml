@@ -12,28 +12,29 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
-        
-      - name: Build da imagem Docker
+
+      - name: Build Docker
         run: docker build -t app:ci .
-        
-      - name: Rodar testes com Pytest
-        run: docker run --rm app:ci pytest
+
+      - name: Executar teste container
+        run: docker run --rm app:ci python -m pytest -q tests/
 
   docker-publish:
     runs-on: ubuntu-latest
     needs: build-pipeline-api
-    steps: 
-      - name: Checkout código 
+    if: ${{ secrets.DOCKER_USERNAME && secrets.DOCKER_PASSWORD }}
+    steps:
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Login no DockerHub 
-        uses: docker/login-action@v2 
-        with: 
-          username: ${{ secrets.DOCKER_USERNAME }} 
+      - name: Login Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build da imagem final 
-        run: docker build -t app:latest .
+      - name: Tag imagem docker
+        run: docker tag app:ci ${{ secrets.DOCKER_USERNAME }}/app:latest
 
-      - name: Push da imagem 
-        run: docker push app:latest
+      - name: Push da imagem Docker
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/app:latest
