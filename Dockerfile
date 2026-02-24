@@ -9,6 +9,8 @@ RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
 COPY . /app
 
+ENV FLASK_APP=app.py
+
 EXPOSE 5000
 
 CMD ["python", "app.py"]
