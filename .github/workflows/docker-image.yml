@@ -38,4 +38,4 @@ jobs:
         with:
           context: .
           push: true
-          tags:  ${{ secrets.DOCKER_USERNAME }}/flask-api:latest
+          tags:  ${{ secrets.DOCKER_USERNAME }}/flask-api
