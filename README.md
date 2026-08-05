@@ -28,21 +28,34 @@ Será possível acessar rotas simples, criar cadastros e enviar dados via query 
 
 # ⚙️ Instalação e execução
 
-1 . Clone o repositório 
+1. Clone o repositório 
 
 git clone https://github.com/JuGalvaoMiyaki/Docker_Primeira_API
 
-2 . Crie um ambiente virtual (opcional, mas recomendado)
+2. Verifique se o Python está instalado:
+
+python3 --version
+
+
+Se aparecer "command not found", você precisa instalar o Python primeiro.
+
+Se python3 --version não funcionar, instale via Homebrew:
+
+
+brew install python
+
+
+3. Crie um ambiente virtual (opcional, mas recomendado)
 
 python -m venv venv                     # Para criar o ambiente virtual
 source venv/bin/activate   # Linux/Mac  # Para ativar o ambiente virtual
 venv\Scripts\activate      # Windows    #Para ativar o ambiente virtual
 
-3 . Instale as Dependências 
+4. Instale as Dependências 
 
 pip install -r requirements.txt
 
-4 . Rode a aplicação
+5. Rode a aplicação
 
 python app.py
 
