@@ -15,9 +15,7 @@ COPY requirements.txt /app
 
 RUN pip install --upgrade pip && pip install --no-cache-dir -r requirements.txt
 
-COPY . /app
-
-RUN chown -R appuser:appuser /app
+COPY --chown=appuser:appuser . /app
 USER appuser
 
 ENV FLASK_APP=app.py

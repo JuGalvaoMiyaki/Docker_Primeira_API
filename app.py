@@ -1,7 +1,10 @@
 import os
-from flask import Flask, request, render_template #importando classe flask do framework Flask
+from flask import Flask, request, render_template, abort #importando classe flask do framework Flask
+from flask_wtf import CSRFProtect
 
 app = Flask(__name__) #app -> instância - representa a aplicação web - registra as rotas __name__ guarda o arquivo utilizado na aplicação
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY', 'dev-secret-change-me')
+csrf = CSRFProtect(app)
 
 @app.route('/') #criando rota
 def hello_world(): #função chamada na rota
@@ -18,8 +21,16 @@ def recebe_dados():
     return render_template('dados.html', num=num, text=text)
 
 @app.route('/cadastro', methods=['POST'])
+@csrf.exempt
 def cadastro():
-    data = request.get_json()
+    # Para APIs JSON, exigir API key via header 'X-API-KEY' se configurada
+    required_key = os.getenv('API_KEY')
+    if required_key:
+        api_key = request.headers.get('X-API-KEY')
+        if api_key != required_key:
+            abort(403)
+
+    data = request.get_json() or {}
     nome = data.get('nome')
     email = data.get('email')
 
