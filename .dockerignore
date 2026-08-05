@@ -1,0 +1,15 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+.DS_Store
+.git
+.idea/
+.vscode/
+.pytest_cache/
+node_modules/
+*.log
+.github/
+Dockerfile* # keep Dockerfile but ignore generated variants
+*.md
