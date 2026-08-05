@@ -1,0 +1,40 @@
+name: Primeira API
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build-pipeline-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker
+        run: docker build -t app:ci .
+
+      - name: Executar teste container
+        run: docker run --rm app:ci python -m pytest -q tests/
+
+  docker-publish:
+    runs-on: ubuntu-latest
+    needs: build-pipeline-api
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Login Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+     
+      - name: Build da imagem final 
+        run: docker build -t jugalvaomiyaki/flask-api:latest .
+
+      - name: Push da imagem 
+        run: docker push jugalvaomiyaki/flask-api:latest
